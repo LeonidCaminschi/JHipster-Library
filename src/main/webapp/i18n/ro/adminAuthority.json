@@ -1,0 +1,23 @@
+{
+  "libraryApp": {
+    "adminAuthority": {
+      "home": {
+        "title": "Authorities",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Creeare o nouă entitate Authority",
+        "createOrEditLabel": "Creeare sau editare Authority",
+        "notFound": "No Authorities found"
+      },
+      "created": "A fost creată o nouă entitate Authority cu identificatorul {{ param }}",
+      "updated": "Authority cu identificatorul {{ param }} a fost actualizată",
+      "deleted": "Authority cu identificatorul {{ param }} a fost ștearsă",
+      "delete": {
+        "question": "Sunteți sigur că doriți să ștergeți Authority {{ id }}?"
+      },
+      "detail": {
+        "title": "Authority"
+      },
+      "name": "Name"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<div>
+  <div class="d-flex justify-content-center">
+    <div class="col-lg-6 col-md-8 col-sm-10">
+      <h1 data-cy="loginTitle" jhiTranslate="login.title">Autentificare</h1>
+      @if (authenticationError()) {
+        <div class="alert alert-danger" data-cy="loginError" jhiTranslate="login.messages.error.authentication">
+          <strong>Autentificarea nu a reușit!</strong>. Va rugăm să vă verificați credențialele și să încercați din nou.
+        </div>
+      }
+      <form class="form" (ngSubmit)="login()" [formGroup]="loginForm">
+        <div class="mb-3">
+          <label class="username-label" for="username" jhiTranslate="global.form.username.label">Utilizator</label>
+          <input
+            type="text"
+            class="form-control"
+            name="username"
+            id="username"
+            placeholder="{{ 'global.form.username.placeholder' | translate }}"
+            formControlName="username"
+            data-cy="username"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label for="password" jhiTranslate="login.form.password">Parolă</label>
+          <input
+            type="password"
+            class="form-control"
+            name="password"
+            id="password"
+            placeholder="{{ 'login.form.password.placeholder' | translate }}"
+            formControlName="password"
+            data-cy="password"
+          />
+        </div>
+
+        <div class="form-check">
+          <label class="form-check-label" for="rememberMe">
+            <input class="form-check-input" type="checkbox" name="rememberMe" id="rememberMe" formControlName="rememberMe" />
+            <span jhiTranslate="login.form.rememberme">Reautentificare automată</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary" data-cy="submit" jhiTranslate="login.form.button">Autentificare</button>
+      </form>
+      <div class="mt-3 alert alert-warning">
+        <a class="alert-link" routerLink="/account/reset/request" data-cy="forgetYourPasswordSelector" jhiTranslate="login.password.forgot"
+          >V-ați uitat parola?</a
+        >
+      </div>
+
+      <div class="alert alert-warning">
+        <span jhiTranslate="global.messages.info.register.noaccount">Încă nu aveți un cont?</span>
+        <a class="alert-link" routerLink="/account/register" jhiTranslate="global.messages.info.register.link">Înregistrați un cont nou</a>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,33 @@
+{
+  "generator-jhipster": {
+    "applicationType": "monolith",
+    "authenticationType": "jwt",
+    "baseName": "library",
+    "buildTool": "maven",
+    "cacheProvider": "no",
+    "clientFramework": "angular",
+    "clientTestFrameworks": [],
+    "clientTheme": "none",
+    "creationTimestamp": 1743414364062,
+    "databaseType": "sql",
+    "devDatabaseType": "postgresql",
+    "enableHibernateCache": null,
+    "enableTranslation": true,
+    "entities": [],
+    "feignClient": null,
+    "jhipsterVersion": "8.9.0",
+    "jwtSecretKey": "ZDZlMzZiOWE2ZTgwZDg5ZDQxNjhjYTEyY2E1MDUxMzg3NDc5NzdjZDJmYmE3M2RlYzVlOWNlODVmZWRmNjllNjVjMGNmOTZhNzY2NjVlNWI4OGMyNjM3ZWYzNzUzZDhkYzQ0MTdiZGI2MTBlNTVmN2MwNDgzZGQ3NmQ4NDVlYWM=",
+    "languages": ["ro", "en", "ru"],
+    "microfrontend": null,
+    "microfrontends": [],
+    "nativeLanguage": "ro",
+    "packageName": "com.esempla.library",
+    "prodDatabaseType": "postgresql",
+    "reactive": false,
+    "serverPort": null,
+    "serviceDiscoveryType": null,
+    "syncUserWithIdp": null,
+    "testFrameworks": [],
+    "withAdminUi": true
+  }
+}
