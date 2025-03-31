@@ -1,0 +1,30 @@
+{
+  "libraryApp": {
+    "book": {
+      "home": {
+        "title": "Books",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Creeare o nouă entitate Book",
+        "createOrEditLabel": "Creeare sau editare Book",
+        "notFound": "No Books found"
+      },
+      "created": "A fost creată o nouă entitate Book cu identificatorul {{ param }}",
+      "updated": "Book cu identificatorul {{ param }} a fost actualizată",
+      "deleted": "Book cu identificatorul {{ param }} a fost ștearsă",
+      "delete": {
+        "question": "Sunteți sigur că doriți să ștergeți Book {{ id }}?"
+      },
+      "detail": {
+        "title": "Book"
+      },
+      "id": "ID",
+      "name": "Name",
+      "publishYear": "Publish Year",
+      "copies": "Copies",
+      "picture": "Picture",
+      "bookAuthor": "Book Author",
+      "borrowedBook": "Borrowed Book",
+      "publisher": "Publisher"
+    }
+  }
+}

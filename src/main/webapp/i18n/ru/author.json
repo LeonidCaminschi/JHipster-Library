@@ -1,0 +1,26 @@
+{
+  "libraryApp": {
+    "author": {
+      "home": {
+        "title": "Authors",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый Author",
+        "createOrEditLabel": "Создать или отредактировать Author",
+        "notFound": "Authors не найдено"
+      },
+      "created": "Новый Author создан с идентификатором {{ param }}",
+      "updated": "Author обновлен с идентификатором {{ param }}",
+      "deleted": "Author удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Author {{ id }}?"
+      },
+      "detail": {
+        "title": "Author"
+      },
+      "id": "ID",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "bookAuthor": "Book Author"
+    }
+  }
+}

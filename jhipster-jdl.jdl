@@ -1,0 +1,36 @@
+entity BookAuthor
+
+entity Author {
+    firstName String required
+    lastName String required
+}
+
+entity Book {
+    name String required unique
+    publishYear String required
+    copies Long min(0)
+    picture String required
+}
+
+entity Publisher {
+    name String required
+}
+
+entity BorrowedBook {
+    borrowDate ZonedDateTime required
+}
+
+entity Client {
+    firstName String required
+    lastName String required
+    address String required
+    phone String required
+}
+
+relationship OneToMany {
+    Author to BookAuthor{author}
+    Book to BookAuthor{book}
+    Publisher to Book{publisher}
+    Book to BorrowedBook{book}
+    Client to BorrowedBook{client}
+}

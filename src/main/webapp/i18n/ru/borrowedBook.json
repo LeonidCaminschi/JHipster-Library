@@ -1,0 +1,26 @@
+{
+  "libraryApp": {
+    "borrowedBook": {
+      "home": {
+        "title": "Borrowed Books",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый Borrowed Book",
+        "createOrEditLabel": "Создать или отредактировать Borrowed Book",
+        "notFound": "Borrowed Books не найдено"
+      },
+      "created": "Новый Borrowed Book создан с идентификатором {{ param }}",
+      "updated": "Borrowed Book обновлен с идентификатором {{ param }}",
+      "deleted": "Borrowed Book удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Borrowed Book {{ id }}?"
+      },
+      "detail": {
+        "title": "Borrowed Book"
+      },
+      "id": "ID",
+      "borrowDate": "Borrow Date",
+      "book": "Book",
+      "client": "Client"
+    }
+  }
+}

@@ -1,0 +1,96 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-borrowed-book-heading"
+        data-cy="BorrowedBookCreateUpdateHeading"
+        jhiTranslate="libraryApp.borrowedBook.home.createOrEditLabel"
+      >
+        Creeare sau editare Borrowed Book
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="libraryApp.borrowedBook.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let borrowDateRef = editForm.get('borrowDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_borrowDate" jhiTranslate="libraryApp.borrowedBook.borrowDate">Borrow Date</label>
+          <div class="d-flex">
+            <input
+              id="field_borrowDate"
+              data-cy="borrowDate"
+              type="datetime-local"
+              class="form-control"
+              name="borrowDate"
+              formControlName="borrowDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (borrowDateRef.invalid && (borrowDateRef.dirty || borrowDateRef.touched)) {
+            <div>
+              @if (editForm.get('borrowDate')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Acest câmp este necesar.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('borrowDate')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >Acest câmp trebuie să conțină data și ora.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_book" jhiTranslate="libraryApp.borrowedBook.book">Book</label>
+          <select class="form-control" id="field_book" data-cy="book" name="book" formControlName="book" [compareWith]="compareBook">
+            <option [ngValue]="null"></option>
+            @for (bookOption of booksSharedCollection; track $index) {
+              <option [ngValue]="bookOption">{{ bookOption.id }}</option>
+            }
+          </select>
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_client" jhiTranslate="libraryApp.borrowedBook.client">Client</label>
+          <select
+            class="form-control"
+            id="field_client"
+            data-cy="client"
+            name="client"
+            formControlName="client"
+            [compareWith]="compareClient"
+          >
+            <option [ngValue]="null"></option>
+            @for (clientOption of clientsSharedCollection; track $index) {
+              <option [ngValue]="clientOption">{{ clientOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Anulare</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvare</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

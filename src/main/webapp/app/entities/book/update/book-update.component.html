@@ -1,0 +1,120 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-book-heading" data-cy="BookCreateUpdateHeading" jhiTranslate="libraryApp.book.home.createOrEditLabel">
+        Creeare sau editare Book
+      </h2>
+
+      <div>
+        <jhi-alert-error></jhi-alert-error>
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="libraryApp.book.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let nameRef = editForm.get('name')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_name" jhiTranslate="libraryApp.book.name">Name</label>
+          <input type="text" class="form-control" name="name" id="field_name" data-cy="name" formControlName="name" />
+          @if (nameRef.invalid && (nameRef.dirty || nameRef.touched)) {
+            <div>
+              @if (editForm.get('name')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Acest câmp este necesar.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let publishYearRef = editForm.get('publishYear')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_publishYear" jhiTranslate="libraryApp.book.publishYear">Publish Year</label>
+          <input
+            type="text"
+            class="form-control"
+            name="publishYear"
+            id="field_publishYear"
+            data-cy="publishYear"
+            formControlName="publishYear"
+          />
+          @if (publishYearRef.invalid && (publishYearRef.dirty || publishYearRef.touched)) {
+            <div>
+              @if (editForm.get('publishYear')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Acest câmp este necesar.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let copiesRef = editForm.get('copies')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_copies" jhiTranslate="libraryApp.book.copies">Copies</label>
+          <input type="number" class="form-control" name="copies" id="field_copies" data-cy="copies" formControlName="copies" />
+          @if (copiesRef.invalid && (copiesRef.dirty || copiesRef.touched)) {
+            <div>
+              @if (editForm.get('copies')?.errors?.min) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.min" [translateValues]="{ min: '0' }"
+                  >Acest câmp trebuie să aibă o valoare mai mare decât 0.</small
+                >
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('copies')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >Acest câmp trebuie să fie numeric.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let pictureRef = editForm.get('picture')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_picture" jhiTranslate="libraryApp.book.picture">Picture</label>
+          <input type="text" class="form-control" name="picture" id="field_picture" data-cy="picture" formControlName="picture" />
+          @if (pictureRef.invalid && (pictureRef.dirty || pictureRef.touched)) {
+            <div>
+              @if (editForm.get('picture')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">Acest câmp este necesar.</small>
+              }
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_publisher" jhiTranslate="libraryApp.book.publisher">Publisher</label>
+          <select
+            class="form-control"
+            id="field_publisher"
+            data-cy="publisher"
+            name="publisher"
+            formControlName="publisher"
+            [compareWith]="comparePublisher"
+          >
+            <option [ngValue]="null"></option>
+            @for (publisherOption of publishersSharedCollection; track $index) {
+              <option [ngValue]="publisherOption">{{ publisherOption.id }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Anulare</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Salvare</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

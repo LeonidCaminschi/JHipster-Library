@@ -1,0 +1,30 @@
+{
+  "libraryApp": {
+    "book": {
+      "home": {
+        "title": "Books",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый Book",
+        "createOrEditLabel": "Создать или отредактировать Book",
+        "notFound": "Books не найдено"
+      },
+      "created": "Новый Book создан с идентификатором {{ param }}",
+      "updated": "Book обновлен с идентификатором {{ param }}",
+      "deleted": "Book удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Book {{ id }}?"
+      },
+      "detail": {
+        "title": "Book"
+      },
+      "id": "ID",
+      "name": "Name",
+      "publishYear": "Publish Year",
+      "copies": "Copies",
+      "picture": "Picture",
+      "bookAuthor": "Book Author",
+      "borrowedBook": "Borrowed Book",
+      "publisher": "Publisher"
+    }
+  }
+}

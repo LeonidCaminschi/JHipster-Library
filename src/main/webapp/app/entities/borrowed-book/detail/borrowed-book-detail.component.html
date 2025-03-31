@@ -1,0 +1,50 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (borrowedBook(); as borrowedBookRef) {
+      <div>
+        <h2 data-cy="borrowedBookDetailsHeading"><span jhiTranslate="libraryApp.borrowedBook.detail.title">Borrowed Book</span></h2>
+
+        <hr />
+
+        <jhi-alert-error></jhi-alert-error>
+
+        <jhi-alert></jhi-alert>
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ borrowedBookRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="libraryApp.borrowedBook.borrowDate">Borrow Date</span></dt>
+          <dd>
+            <span>{{ borrowedBookRef.borrowDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="libraryApp.borrowedBook.book">Book</span></dt>
+          <dd>
+            @if (borrowedBook()!.book) {
+              <div>
+                <a [routerLink]="['/book', borrowedBook()!.book?.id, 'view']">{{ borrowedBookRef.book?.id }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="libraryApp.borrowedBook.client">Client</span></dt>
+          <dd>
+            @if (borrowedBook()!.client) {
+              <div>
+                <a [routerLink]="['/client', borrowedBook()!.client?.id, 'view']">{{ borrowedBookRef.client?.id }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Înapoi</span>
+        </button>
+
+        <button type="button" [routerLink]="['/borrowed-book', borrowedBookRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Editare</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

@@ -1,0 +1,102 @@
+<div>
+  <h2 id="page-heading" data-cy="BookAuthorHeading">
+    <span jhiTranslate="libraryApp.bookAuthor.home.title">Book Authors</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="libraryApp.bookAuthor.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-book-author"
+        [routerLink]="['/book-author/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="libraryApp.bookAuthor.home.createLabel">Creeare o nouă entitate Book Author</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (bookAuthors().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="libraryApp.bookAuthor.home.notFound">No Book Authors found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="author.id">
+              <div class="d-flex">
+                <span jhiTranslate="libraryApp.bookAuthor.author">Author</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="book.id">
+              <div class="d-flex">
+                <span jhiTranslate="libraryApp.bookAuthor.book">Book</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (bookAuthor of bookAuthors(); track trackId(bookAuthor)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/book-author', bookAuthor.id, 'view']">{{ bookAuthor.id }}</a>
+              </td>
+              <td>
+                @if (bookAuthor.author) {
+                  <div>
+                    <a [routerLink]="['/author', bookAuthor.author.id, 'view']">{{ bookAuthor.author.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (bookAuthor.book) {
+                  <div>
+                    <a [routerLink]="['/book', bookAuthor.book.id, 'view']">{{ bookAuthor.book.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/book-author', bookAuthor.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vizualizare</span>
+                  </a>
+
+                  <a [routerLink]="['/book-author', bookAuthor.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editare</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(bookAuthor)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Ștergere</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

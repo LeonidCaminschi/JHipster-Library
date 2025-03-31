@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20250331114358"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "borrowDate",
+      "fieldType": "ZonedDateTime",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "BorrowedBook",
+  "relationships": [
+    {
+      "otherEntityName": "book",
+      "relationshipName": "book",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "client",
+      "relationshipName": "client",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

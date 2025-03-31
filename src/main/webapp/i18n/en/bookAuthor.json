@@ -1,0 +1,25 @@
+{
+  "libraryApp": {
+    "bookAuthor": {
+      "home": {
+        "title": "Book Authors",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Book Author",
+        "createOrEditLabel": "Create or edit a Book Author",
+        "notFound": "No Book Authors found"
+      },
+      "created": "A new Book Author is created with identifier {{ param }}",
+      "updated": "A Book Author is updated with identifier {{ param }}",
+      "deleted": "A Book Author is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Book Author {{ id }}?"
+      },
+      "detail": {
+        "title": "Book Author"
+      },
+      "id": "ID",
+      "author": "Author",
+      "book": "Book"
+    }
+  }
+}

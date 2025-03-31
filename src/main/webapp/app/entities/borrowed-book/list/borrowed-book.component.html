@@ -1,0 +1,110 @@
+<div>
+  <h2 id="page-heading" data-cy="BorrowedBookHeading">
+    <span jhiTranslate="libraryApp.borrowedBook.home.title">Borrowed Books</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="libraryApp.borrowedBook.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-borrowed-book"
+        [routerLink]="['/borrowed-book/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="libraryApp.borrowedBook.home.createLabel">Creeare o nouă entitate Borrowed Book</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error></jhi-alert-error>
+
+  <jhi-alert></jhi-alert>
+
+  @if (borrowedBooks().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="libraryApp.borrowedBook.home.notFound">No Borrowed Books found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="borrowDate">
+              <div class="d-flex">
+                <span jhiTranslate="libraryApp.borrowedBook.borrowDate">Borrow Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="book.id">
+              <div class="d-flex">
+                <span jhiTranslate="libraryApp.borrowedBook.book">Book</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="client.id">
+              <div class="d-flex">
+                <span jhiTranslate="libraryApp.borrowedBook.client">Client</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (borrowedBook of borrowedBooks(); track trackId(borrowedBook)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/borrowed-book', borrowedBook.id, 'view']">{{ borrowedBook.id }}</a>
+              </td>
+              <td>{{ borrowedBook.borrowDate | formatMediumDatetime }}</td>
+              <td>
+                @if (borrowedBook.book) {
+                  <div>
+                    <a [routerLink]="['/book', borrowedBook.book.id, 'view']">{{ borrowedBook.book.id }}</a>
+                  </div>
+                }
+              </td>
+              <td>
+                @if (borrowedBook.client) {
+                  <div>
+                    <a [routerLink]="['/client', borrowedBook.client.id, 'view']">{{ borrowedBook.client.id }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/borrowed-book', borrowedBook.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">Vizualizare</span>
+                  </a>
+
+                  <a [routerLink]="['/borrowed-book', borrowedBook.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Editare</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(borrowedBook)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Ștergere</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

@@ -1,0 +1,26 @@
+{
+  "libraryApp": {
+    "borrowedBook": {
+      "home": {
+        "title": "Borrowed Books",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Creeare o nouă entitate Borrowed Book",
+        "createOrEditLabel": "Creeare sau editare Borrowed Book",
+        "notFound": "No Borrowed Books found"
+      },
+      "created": "A fost creată o nouă entitate Borrowed Book cu identificatorul {{ param }}",
+      "updated": "Borrowed Book cu identificatorul {{ param }} a fost actualizată",
+      "deleted": "Borrowed Book cu identificatorul {{ param }} a fost ștearsă",
+      "delete": {
+        "question": "Sunteți sigur că doriți să ștergeți Borrowed Book {{ id }}?"
+      },
+      "detail": {
+        "title": "Borrowed Book"
+      },
+      "id": "ID",
+      "borrowDate": "Borrow Date",
+      "book": "Book",
+      "client": "Client"
+    }
+  }
+}

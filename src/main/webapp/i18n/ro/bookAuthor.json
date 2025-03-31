@@ -1,0 +1,25 @@
+{
+  "libraryApp": {
+    "bookAuthor": {
+      "home": {
+        "title": "Book Authors",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Creeare o nouă entitate Book Author",
+        "createOrEditLabel": "Creeare sau editare Book Author",
+        "notFound": "No Book Authors found"
+      },
+      "created": "A fost creată o nouă entitate Book Author cu identificatorul {{ param }}",
+      "updated": "Book Author cu identificatorul {{ param }} a fost actualizată",
+      "deleted": "Book Author cu identificatorul {{ param }} a fost ștearsă",
+      "delete": {
+        "question": "Sunteți sigur că doriți să ștergeți Book Author {{ id }}?"
+      },
+      "detail": {
+        "title": "Book Author"
+      },
+      "id": "ID",
+      "author": "Author",
+      "book": "Book"
+    }
+  }
+}

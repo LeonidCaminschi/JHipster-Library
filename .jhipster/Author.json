@@ -1,0 +1,29 @@
+{
+  "annotations": {
+    "changelogDate": "20250331114355"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "firstName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "lastName",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Author",
+  "relationships": [
+    {
+      "otherEntityName": "bookAuthor",
+      "otherEntityRelationshipName": "author",
+      "relationshipName": "bookAuthor",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "searchEngine": "no"
+}

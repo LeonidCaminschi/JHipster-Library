@@ -1,0 +1,30 @@
+@if (borrowedBook) {
+  <form name="deleteForm" (ngSubmit)="confirmDelete(borrowedBook.id!)">
+    <div class="modal-header">
+      <h4 class="modal-title" data-cy="borrowedBookDeleteDialogHeading" jhiTranslate="entity.delete.title">
+        Confirmați operația de ștergere
+      </h4>
+    </div>
+
+    <div class="modal-body">
+      <jhi-alert-error></jhi-alert-error>
+      <p
+        id="jhi-delete-borrowedBook-heading"
+        jhiTranslate="libraryApp.borrowedBook.delete.question"
+        [translateValues]="{ id: borrowedBook.id }"
+      >
+        Sunteți sigur că doriți să ștergeți Borrowed Book {{ borrowedBook.id }}?
+      </p>
+    </div>
+
+    <div class="modal-footer">
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="cancel()">
+        <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Anulare</span>
+      </button>
+
+      <button id="jhi-confirm-delete-borrowedBook" data-cy="entityConfirmDeleteButton" type="submit" class="btn btn-danger">
+        <fa-icon icon="times"></fa-icon>&nbsp;<span jhiTranslate="entity.action.delete">Ștergere</span>
+      </button>
+    </div>
+  </form>
+}

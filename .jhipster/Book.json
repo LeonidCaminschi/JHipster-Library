@@ -1,0 +1,53 @@
+{
+  "annotations": {
+    "changelogDate": "20250331114356"
+  },
+  "applications": "*",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "publishYear",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "copies",
+      "fieldType": "Long",
+      "fieldValidateRules": ["min"],
+      "fieldValidateRulesMin": "0"
+    },
+    {
+      "fieldName": "picture",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "Book",
+  "relationships": [
+    {
+      "otherEntityName": "bookAuthor",
+      "otherEntityRelationshipName": "book",
+      "relationshipName": "bookAuthor",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "borrowedBook",
+      "otherEntityRelationshipName": "book",
+      "relationshipName": "borrowedBook",
+      "relationshipSide": "left",
+      "relationshipType": "one-to-many"
+    },
+    {
+      "otherEntityName": "publisher",
+      "relationshipName": "publisher",
+      "relationshipSide": "right",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no"
+}

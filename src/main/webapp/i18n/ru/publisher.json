@@ -1,0 +1,25 @@
+{
+  "libraryApp": {
+    "publisher": {
+      "home": {
+        "title": "Publishers",
+        "refreshListLabel": "Обновить список",
+        "createLabel": "Создать новый Publisher",
+        "createOrEditLabel": "Создать или отредактировать Publisher",
+        "notFound": "Publishers не найдено"
+      },
+      "created": "Новый Publisher создан с идентификатором {{ param }}",
+      "updated": "Publisher обновлен с идентификатором {{ param }}",
+      "deleted": "Publisher удален с идентификатором {{ param }}",
+      "delete": {
+        "question": "Вы уверены что хотите удалить Publisher {{ id }}?"
+      },
+      "detail": {
+        "title": "Publisher"
+      },
+      "id": "ID",
+      "name": "Name",
+      "book": "Book"
+    }
+  }
+}
