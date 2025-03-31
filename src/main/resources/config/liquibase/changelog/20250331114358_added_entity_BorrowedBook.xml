@@ -11,7 +11,7 @@
     -->
     <changeSet id="20250331114358-1" author="jhipster">
         <createTable tableName="borrowed_book">
-            <column name="id" type="bigint">
+            <column name="id" type="bigserial">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="borrow_date" type="${datetimeType}">
