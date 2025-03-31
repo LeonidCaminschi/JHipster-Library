@@ -93,54 +93,6 @@ public class AuthorResource {
     }
 
     /**
-     * {@code PATCH  /authors/:id} : Partial updates given fields of an existing author, field will ignore if it is null
-     *
-     * @param id the id of the author to save.
-     * @param author the author to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated author,
-     * or with status {@code 400 (Bad Request)} if the author is not valid,
-     * or with status {@code 404 (Not Found)} if the author is not found,
-     * or with status {@code 500 (Internal Server Error)} if the author couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Author> partialUpdateAuthor(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Author author
-    ) throws URISyntaxException {
-        LOG.debug("REST request to partial update Author partially : {}, {}", id, author);
-        if (author.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, author.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!authorRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<Author> result = authorRepository
-            .findById(author.getId())
-            .map(existingAuthor -> {
-                if (author.getFirstName() != null) {
-                    existingAuthor.setFirstName(author.getFirstName());
-                }
-                if (author.getLastName() != null) {
-                    existingAuthor.setLastName(author.getLastName());
-                }
-
-                return existingAuthor;
-            })
-            .map(authorRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, author.getId().toString())
-        );
-    }
-
-    /**
      * {@code GET  /authors} : get all the authors.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of authors in body.

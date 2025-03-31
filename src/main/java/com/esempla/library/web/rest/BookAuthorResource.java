@@ -91,42 +91,6 @@ public class BookAuthorResource {
     }
 
     /**
-     * {@code PATCH  /book-authors/:id} : Partial updates given fields of an existing bookAuthor, field will ignore if it is null
-     *
-     * @param id the id of the bookAuthor to save.
-     * @param bookAuthor the bookAuthor to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated bookAuthor,
-     * or with status {@code 400 (Bad Request)} if the bookAuthor is not valid,
-     * or with status {@code 404 (Not Found)} if the bookAuthor is not found,
-     * or with status {@code 500 (Internal Server Error)} if the bookAuthor couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<BookAuthor> partialUpdateBookAuthor(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody BookAuthor bookAuthor
-    ) throws URISyntaxException {
-        LOG.debug("REST request to partial update BookAuthor partially : {}, {}", id, bookAuthor);
-        if (bookAuthor.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, bookAuthor.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!bookAuthorRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<BookAuthor> result = bookAuthorRepository.findById(bookAuthor.getId()).map(bookAuthorRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, bookAuthor.getId().toString())
-        );
-    }
-
-    /**
      * {@code GET  /book-authors} : get all the bookAuthors.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of bookAuthors in body.

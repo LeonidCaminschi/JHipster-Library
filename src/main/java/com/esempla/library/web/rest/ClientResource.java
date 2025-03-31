@@ -93,60 +93,6 @@ public class ClientResource {
     }
 
     /**
-     * {@code PATCH  /clients/:id} : Partial updates given fields of an existing client, field will ignore if it is null
-     *
-     * @param id the id of the client to save.
-     * @param client the client to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated client,
-     * or with status {@code 400 (Bad Request)} if the client is not valid,
-     * or with status {@code 404 (Not Found)} if the client is not found,
-     * or with status {@code 500 (Internal Server Error)} if the client couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Client> partialUpdateClient(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Client client
-    ) throws URISyntaxException {
-        LOG.debug("REST request to partial update Client partially : {}, {}", id, client);
-        if (client.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, client.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!clientRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<Client> result = clientRepository
-            .findById(client.getId())
-            .map(existingClient -> {
-                if (client.getFirstName() != null) {
-                    existingClient.setFirstName(client.getFirstName());
-                }
-                if (client.getLastName() != null) {
-                    existingClient.setLastName(client.getLastName());
-                }
-                if (client.getAddress() != null) {
-                    existingClient.setAddress(client.getAddress());
-                }
-                if (client.getPhone() != null) {
-                    existingClient.setPhone(client.getPhone());
-                }
-
-                return existingClient;
-            })
-            .map(clientRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, client.getId().toString())
-        );
-    }
-
-    /**
      * {@code GET  /clients} : get all the clients.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of clients in body.

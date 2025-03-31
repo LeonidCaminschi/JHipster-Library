@@ -4,7 +4,6 @@ import com.esempla.library.domain.BorrowedBook;
 import com.esempla.library.repository.BorrowedBookRepository;
 import com.esempla.library.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -90,51 +89,6 @@ public class BorrowedBookResource {
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, borrowedBook.getId().toString()))
             .body(borrowedBook);
-    }
-
-    /**
-     * {@code PATCH  /borrowed-books/:id} : Partial updates given fields of an existing borrowedBook, field will ignore if it is null
-     *
-     * @param id the id of the borrowedBook to save.
-     * @param borrowedBook the borrowedBook to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated borrowedBook,
-     * or with status {@code 400 (Bad Request)} if the borrowedBook is not valid,
-     * or with status {@code 404 (Not Found)} if the borrowedBook is not found,
-     * or with status {@code 500 (Internal Server Error)} if the borrowedBook couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<BorrowedBook> partialUpdateBorrowedBook(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody BorrowedBook borrowedBook
-    ) throws URISyntaxException {
-        LOG.debug("REST request to partial update BorrowedBook partially : {}, {}", id, borrowedBook);
-        if (borrowedBook.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, borrowedBook.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!borrowedBookRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<BorrowedBook> result = borrowedBookRepository
-            .findById(borrowedBook.getId())
-            .map(existingBorrowedBook -> {
-                if (borrowedBook.getBorrowDate() != null) {
-                    existingBorrowedBook.setBorrowDate(borrowedBook.getBorrowDate());
-                }
-
-                return existingBorrowedBook;
-            })
-            .map(borrowedBookRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, borrowedBook.getId().toString())
-        );
     }
 
     /**

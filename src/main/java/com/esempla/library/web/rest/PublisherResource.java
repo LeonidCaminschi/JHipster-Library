@@ -93,51 +93,6 @@ public class PublisherResource {
     }
 
     /**
-     * {@code PATCH  /publishers/:id} : Partial updates given fields of an existing publisher, field will ignore if it is null
-     *
-     * @param id the id of the publisher to save.
-     * @param publisher the publisher to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated publisher,
-     * or with status {@code 400 (Bad Request)} if the publisher is not valid,
-     * or with status {@code 404 (Not Found)} if the publisher is not found,
-     * or with status {@code 500 (Internal Server Error)} if the publisher couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Publisher> partialUpdatePublisher(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Publisher publisher
-    ) throws URISyntaxException {
-        LOG.debug("REST request to partial update Publisher partially : {}, {}", id, publisher);
-        if (publisher.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, publisher.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!publisherRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<Publisher> result = publisherRepository
-            .findById(publisher.getId())
-            .map(existingPublisher -> {
-                if (publisher.getName() != null) {
-                    existingPublisher.setName(publisher.getName());
-                }
-
-                return existingPublisher;
-            })
-            .map(publisherRepository::save);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, publisher.getId().toString())
-        );
-    }
-
-    /**
      * {@code GET  /publishers} : get all the publishers.
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of publishers in body.
