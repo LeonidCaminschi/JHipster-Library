@@ -37,7 +37,6 @@
                   separator=";"
                   tableName="publisher"
                   usePreparedStatements="true">
-            <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

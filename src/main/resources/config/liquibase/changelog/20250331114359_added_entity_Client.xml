@@ -46,7 +46,6 @@
                   separator=";"
                   tableName="client"
                   usePreparedStatements="true">
-            <column name="id" type="numeric"/>
             <column name="first_name" type="string"/>
             <column name="last_name" type="string"/>
             <column name="address" type="string"/>

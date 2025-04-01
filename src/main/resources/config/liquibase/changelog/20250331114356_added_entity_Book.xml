@@ -49,7 +49,6 @@
                   separator=";"
                   tableName="book"
                   usePreparedStatements="true">
-            <column name="id" type="numeric"/>
             <column name="name" type="string"/>
             <column name="publish_year" type="string"/>
             <column name="copies" type="numeric"/>

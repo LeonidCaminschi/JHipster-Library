@@ -40,7 +40,6 @@
                   separator=";"
                   tableName="author"
                   usePreparedStatements="true">
-            <column name="id" type="numeric"/>
             <column name="first_name" type="string"/>
             <column name="last_name" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

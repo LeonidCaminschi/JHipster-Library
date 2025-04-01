@@ -1,11 +1,11 @@
-id;name;publish_year;copies;picture;publisher_id
-1;Luceafărul;1883;10;/books/image/Luceafarul;1
-2;Orbitor;1996;100;/books/image/Orbitor;2
-3;Amintiri din copilărie;1881;33;/books/image/AmintiridinCopilarie;1
-4;Moromeții;1955;12;Morometii;3
-5;On the Heights of Despair;1934;52;/books/image/OntheHeightsofDespair;4
-6;Trei iezi;1970;44;/books/image/Treiiezi;1
-7;Frunze de dor;1957;5;/books/image/Frunzededor;5
-8;Toamnele;1971;1;/books/image/Toamnele;1
-9;Isprăvile lui Guguță;1967;82;/books/image/IspravileluiGuguta;6
-10;Povestea cu cocoșul roșu;1966;8;/books/image/Povesteacucucosulrosu;1
+name;publish_year;copies;picture;publisher_id
+Luceafărul;1883;10;/books/image/Luceafarul;1
+Orbitor;1996;100;/books/image/Orbitor;2
+Amintiri din copilărie;1881;33;/books/image/AmintiridinCopilarie;1
+Moromeții;1955;12;Morometii;3
+On the Heights of Despair;1934;52;/books/image/OntheHeightsofDespair;4
+Trei iezi;1970;44;/books/image/Treiiezi;1
+Frunze de dor;1957;5;/books/image/Frunzededor;5
+Toamnele;1971;1;/books/image/Toamnele;1
+Isprăvile lui Guguță;1967;82;/books/image/IspravileluiGuguta;6
+Povestea cu cocoșul roșu;1966;8;/books/image/Povesteacucucosulrosu;1
