@@ -1,7 +1,11 @@
 package com.esempla.library.web.rest;
 
+import static com.esempla.library.config.Constants.*;
+
 import com.esempla.library.domain.BorrowedBook;
 import com.esempla.library.repository.BorrowedBookRepository;
+import com.esempla.library.service.BorrowedBookService;
+import com.esempla.library.service.dto.BorrowReturnRequest;
 import com.esempla.library.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
 import java.net.URI;
@@ -28,15 +32,15 @@ public class BorrowedBookResource {
 
     private static final Logger LOG = LoggerFactory.getLogger(BorrowedBookResource.class);
 
-    private static final String ENTITY_NAME = "borrowedBook";
-
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
     private final BorrowedBookRepository borrowedBookRepository;
+    private final BorrowedBookService borrowedBookService;
 
-    public BorrowedBookResource(BorrowedBookRepository borrowedBookRepository) {
+    public BorrowedBookResource(BorrowedBookRepository borrowedBookRepository, BorrowedBookService borrowedBookService) {
         this.borrowedBookRepository = borrowedBookRepository;
+        this.borrowedBookService = borrowedBookService;
     }
 
     /**
@@ -50,7 +54,7 @@ public class BorrowedBookResource {
     public ResponseEntity<BorrowedBook> createBorrowedBook(@Valid @RequestBody BorrowedBook borrowedBook) throws URISyntaxException {
         LOG.debug("REST request to save BorrowedBook : {}", borrowedBook);
         if (borrowedBook.getId() != null) {
-            throw new BadRequestAlertException("A new borrowedBook cannot already have an ID", ENTITY_NAME, "idexists");
+            throw new BadRequestAlertException(A_NEW_BORROWED_BOOK_CANNOT_ALREADY_HAVE_AN_ID, ENTITY_NAME, IDEXISTS);
         }
         borrowedBook = borrowedBookRepository.save(borrowedBook);
         return ResponseEntity.created(new URI("/api/borrowed-books/" + borrowedBook.getId()))
@@ -75,14 +79,14 @@ public class BorrowedBookResource {
     ) throws URISyntaxException {
         LOG.debug("REST request to update BorrowedBook : {}, {}", id, borrowedBook);
         if (borrowedBook.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
+            throw new BadRequestAlertException(INVALID_ID, ENTITY_NAME, IDNULL);
         }
         if (!Objects.equals(id, borrowedBook.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
+            throw new BadRequestAlertException(INVALID_ID, ENTITY_NAME, IDINVALID);
         }
 
         if (!borrowedBookRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
+            throw new BadRequestAlertException(ENTITY_NOT_FOUND, ENTITY_NAME, IDNOTFOUND);
         }
 
         borrowedBook = borrowedBookRepository.save(borrowedBook);
@@ -128,5 +132,31 @@ public class BorrowedBookResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    /**
+     * {@code POST  /borrow} : Borrow books for a client.
+     *
+     * @param borrowRequest the request containing client details and book names.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the number of books borrowed.
+     */
+    @PostMapping("/borrow")
+    public ResponseEntity<String> borrowBooks(@RequestBody BorrowReturnRequest borrowRequest) {
+        LOG.debug("REST request to borrow books: {}", borrowRequest);
+        int borrowedBooksCount = borrowedBookService.borrowBook(borrowRequest);
+        return ResponseEntity.ok().body("Successfully borrowed " + borrowedBooksCount + "/" + borrowRequest.bookNames().size() + " books.");
+    }
+
+    /**
+     * {@code POST  /return} : Return books for a client.
+     *
+     * @param returnRequest the request containing client details and book names.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the number of books returned.
+     */
+    @PostMapping("/return")
+    public ResponseEntity<String> returnBooks(@RequestBody BorrowReturnRequest returnRequest) {
+        LOG.debug("REST request to return books: {}", returnRequest);
+        int returnedBooksCount = borrowedBookService.returnBook(returnRequest);
+        return ResponseEntity.ok().body("Successfully returned " + returnedBooksCount + "/" + returnRequest.bookNames().size() + " books.");
     }
 }

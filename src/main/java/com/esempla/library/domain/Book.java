@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -195,19 +196,20 @@ public class Book implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Book)) {
-            return false;
-        }
-        return getId() != null && getId().equals(((Book) o).getId());
+        if (o == null || getClass() != o.getClass()) return false;
+        Book book = (Book) o;
+        return (
+            Objects.equals(id, book.id) &&
+            Objects.equals(name, book.name) &&
+            Objects.equals(publishYear, book.publishYear) &&
+            Objects.equals(copies, book.copies) &&
+            Objects.equals(picture, book.picture)
+        );
     }
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+        return Objects.hash(id, name, publishYear, copies, picture);
     }
 
     // prettier-ignore

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
+import java.util.Objects;
 
 /**
  * A BorrowedBook.
@@ -90,19 +91,14 @@ public class BorrowedBook implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof BorrowedBook)) {
-            return false;
-        }
-        return getId() != null && getId().equals(((BorrowedBook) o).getId());
+        if (o == null || getClass() != o.getClass()) return false;
+        BorrowedBook that = (BorrowedBook) o;
+        return Objects.equals(id, that.id) && Objects.equals(borrowDate, that.borrowDate);
     }
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+        return Objects.hash(id, borrowDate);
     }
 
     // prettier-ignore

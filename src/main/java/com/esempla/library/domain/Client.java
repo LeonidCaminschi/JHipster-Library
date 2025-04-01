@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -143,19 +144,20 @@ public class Client implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof Client)) {
-            return false;
-        }
-        return getId() != null && getId().equals(((Client) o).getId());
+        if (o == null || getClass() != o.getClass()) return false;
+        Client client = (Client) o;
+        return (
+            Objects.equals(id, client.id) &&
+            Objects.equals(firstName, client.firstName) &&
+            Objects.equals(lastName, client.lastName) &&
+            Objects.equals(address, client.address) &&
+            Objects.equals(phone, client.phone)
+        );
     }
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+        return Objects.hash(id, firstName, lastName, address, phone);
     }
 
     // prettier-ignore

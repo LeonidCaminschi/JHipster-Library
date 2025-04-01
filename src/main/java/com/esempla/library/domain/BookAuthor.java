@@ -3,6 +3,7 @@ package com.esempla.library.domain;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.io.Serializable;
+import java.util.Objects;
 
 /**
  * A BookAuthor.
@@ -71,19 +72,14 @@ public class BookAuthor implements Serializable {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) {
-            return true;
-        }
-        if (!(o instanceof BookAuthor)) {
-            return false;
-        }
-        return getId() != null && getId().equals(((BookAuthor) o).getId());
+        if (o == null || getClass() != o.getClass()) return false;
+        BookAuthor that = (BookAuthor) o;
+        return Objects.equals(id, that.id);
     }
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
-        return getClass().hashCode();
+        return Objects.hashCode(id);
     }
 
     // prettier-ignore
