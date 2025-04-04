@@ -25,6 +25,7 @@ public class CsvExporter implements Exporter {
         for (Object obj : data) {
             for (int i = 0; i < fields.length; i++) {
                 Field field = fields[i];
+                field.setAccessible(true);
                 try {
                     Object value = field.get(obj);
                     csvData.append(value != null ? value.toString() : "");

@@ -1,6 +1,7 @@
 package com.esempla.library.service.dto;
 
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 public class BorrowedBookDTO {
@@ -27,8 +28,8 @@ public class BorrowedBookDTO {
         this.id = id;
     }
 
-    public ZonedDateTime getBorrowDateTime() {
-        return borrowDateTime;
+    public LocalDateTime getBorrowDateTime() {
+        return borrowDateTime.toLocalDateTime();
     }
 
     public void setBorrowDateTime(ZonedDateTime borrowDateTime) {
