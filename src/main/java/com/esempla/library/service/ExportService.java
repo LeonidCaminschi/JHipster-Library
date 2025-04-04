@@ -24,7 +24,7 @@ public class ExportService {
         List<?> data =
             switch (tableName.toLowerCase()) {
                 case "books" -> bookRepository.findAllAsDTO();
-                case "borrowedbooks" -> borrowedBookService.findAll();
+                case "borrowedbooks" -> borrowedBookService.findAllAsDTO();
                 default -> throw new IllegalArgumentException("Unsupported table: " + tableName);
             };
 

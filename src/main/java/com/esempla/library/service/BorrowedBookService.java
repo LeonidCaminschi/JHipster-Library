@@ -12,6 +12,7 @@ import com.esempla.library.repository.BookRepository;
 import com.esempla.library.repository.BorrowedBookRepository;
 import com.esempla.library.repository.ClientRepository;
 import com.esempla.library.service.dto.BorrowReturnRequest;
+import com.esempla.library.service.dto.BorrowedBookDTO;
 import java.time.ZonedDateTime;
 import java.util.List;
 import java.util.Optional;
@@ -124,5 +125,9 @@ public class BorrowedBookService {
         }
 
         return returnedBooks;
+    }
+
+    public List<BorrowedBookDTO> findAllAsDTO() {
+        return borrowedBookRepository.findAllAsDTO();
     }
 }

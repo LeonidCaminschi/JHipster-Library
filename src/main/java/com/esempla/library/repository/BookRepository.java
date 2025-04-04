@@ -23,7 +23,10 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     @Query(
         value = """
-        Select * from book;
+        Select b.id, b.name, b.publish_year, b.copies, a.first_name, a.last_name, pu.name from book as b
+                INNER JOIN book_author as ba on b.id = ba.book_id
+                INNER JOIN author as a on ba.author_id = a.id
+                INNER JOIN publisher as pu on b.publisher_id = pu.id;
         """,
         nativeQuery = true
     )

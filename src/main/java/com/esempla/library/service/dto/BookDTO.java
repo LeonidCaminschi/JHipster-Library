@@ -6,32 +6,50 @@ public class BookDTO {
     private String name;
     private String publishYear;
     private Long copies;
-    private String picture;
-    private Long publisherId;
+    private String authorFirstName;
+    private String authorLastName;
+    private String publisherName;
 
-    public BookDTO(Long id, String name, String publishYear, Long copies, String picture, Long publisherId) {
+    public String getAuthorFirstName() {
+        return authorFirstName;
+    }
+
+    public void setAuthorFirstName(String authorFirstName) {
+        this.authorFirstName = authorFirstName;
+    }
+
+    public String getAuthorLastName() {
+        return authorLastName;
+    }
+
+    public void setAuthorLastName(String authorLastName) {
+        this.authorLastName = authorLastName;
+    }
+
+    public String getPublisherName() {
+        return publisherName;
+    }
+
+    public void setPublisherName(String publisherName) {
+        this.publisherName = publisherName;
+    }
+
+    public BookDTO(
+        Long id,
+        String name,
+        String publishYear,
+        Long copies,
+        String authorFirstName,
+        String authorLastName,
+        String publisherName
+    ) {
         this.id = id;
         this.name = name;
         this.publishYear = publishYear;
         this.copies = copies;
-        this.picture = picture;
-        this.publisherId = publisherId;
-    }
-
-    public void setPublisherId(Long publisherId) {
-        this.publisherId = publisherId;
-    }
-
-    public Long getPublisherId() {
-        return publisherId;
-    }
-
-    public String getPicture() {
-        return picture;
-    }
-
-    public void setPicture(String picture) {
-        this.picture = picture;
+        this.authorFirstName = authorFirstName;
+        this.authorLastName = authorLastName;
+        this.publisherName = publisherName;
     }
 
     public Long getCopies() {
