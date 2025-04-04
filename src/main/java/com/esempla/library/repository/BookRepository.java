@@ -1,6 +1,7 @@
 package com.esempla.library.repository;
 
 import com.esempla.library.domain.Book;
+import com.esempla.library.service.dto.BookDTO;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.*;
@@ -19,4 +20,12 @@ public interface BookRepository extends JpaRepository<Book, Long> {
     void updateCopiesById(Long id);
 
     List<Book> findAllByNameIn(List<String> name);
+
+    @Query(
+        value = """
+        Select * from book;
+        """,
+        nativeQuery = true
+    )
+    List<BookDTO> findAllAsDTO();
 }
