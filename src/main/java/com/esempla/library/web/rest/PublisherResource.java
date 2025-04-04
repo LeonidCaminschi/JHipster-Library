@@ -4,7 +4,6 @@ import com.esempla.library.domain.Publisher;
 import com.esempla.library.repository.PublisherRepository;
 import com.esempla.library.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;

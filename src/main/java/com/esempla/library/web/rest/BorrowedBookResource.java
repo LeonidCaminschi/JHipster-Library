@@ -35,11 +35,9 @@ public class BorrowedBookResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final BorrowedBookRepository borrowedBookRepository;
     private final BorrowedBookService borrowedBookService;
 
-    public BorrowedBookResource(BorrowedBookRepository borrowedBookRepository, BorrowedBookService borrowedBookService) {
-        this.borrowedBookRepository = borrowedBookRepository;
+    public BorrowedBookResource(BorrowedBookService borrowedBookService) {
         this.borrowedBookService = borrowedBookService;
     }
 
@@ -56,7 +54,7 @@ public class BorrowedBookResource {
         if (borrowedBook.getId() != null) {
             throw new BadRequestAlertException(A_NEW_BORROWED_BOOK_CANNOT_ALREADY_HAVE_AN_ID, ENTITY_NAME, IDEXISTS);
         }
-        borrowedBook = borrowedBookRepository.save(borrowedBook);
+        borrowedBook = borrowedBookService.save(borrowedBook);
         return ResponseEntity.created(new URI("/api/borrowed-books/" + borrowedBook.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, borrowedBook.getId().toString()))
             .body(borrowedBook);
@@ -85,11 +83,11 @@ public class BorrowedBookResource {
             throw new BadRequestAlertException(INVALID_ID, ENTITY_NAME, IDINVALID);
         }
 
-        if (!borrowedBookRepository.existsById(id)) {
+        if (!borrowedBookService.existsById(id)) {
             throw new BadRequestAlertException(ENTITY_NOT_FOUND, ENTITY_NAME, IDNOTFOUND);
         }
 
-        borrowedBook = borrowedBookRepository.save(borrowedBook);
+        borrowedBook = borrowedBookService.save(borrowedBook);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, borrowedBook.getId().toString()))
             .body(borrowedBook);
@@ -103,7 +101,7 @@ public class BorrowedBookResource {
     @GetMapping("")
     public List<BorrowedBook> getAllBorrowedBooks() {
         LOG.debug("REST request to get all BorrowedBooks");
-        return borrowedBookRepository.findAll();
+        return borrowedBookService.findAll();
     }
 
     /**
@@ -115,7 +113,7 @@ public class BorrowedBookResource {
     @GetMapping("/{id}")
     public ResponseEntity<BorrowedBook> getBorrowedBook(@PathVariable("id") Long id) {
         LOG.debug("REST request to get BorrowedBook : {}", id);
-        Optional<BorrowedBook> borrowedBook = borrowedBookRepository.findById(id);
+        Optional<BorrowedBook> borrowedBook = borrowedBookService.findById(id);
         return ResponseUtil.wrapOrNotFound(borrowedBook);
     }
 
@@ -128,7 +126,7 @@ public class BorrowedBookResource {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBorrowedBook(@PathVariable("id") Long id) {
         LOG.debug("REST request to delete BorrowedBook : {}", id);
-        borrowedBookRepository.deleteById(id);
+        borrowedBookService.deleteById(id);
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
