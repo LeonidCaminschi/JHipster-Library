@@ -14,32 +14,35 @@ public class ExcelExporter implements Exporter {
         try (Workbook workbook = new XSSFWorkbook(); ByteArrayOutputStream out = new ByteArrayOutputStream()) {
             Sheet sheet = workbook.createSheet("Exported Data");
 
-            // Create header row
             Row headerRow = sheet.createRow(0);
             if (!data.isEmpty()) {
                 Object firstRow = data.get(0);
                 int colIndex = 0;
-                for (Field field : firstRow.getClass().getDeclaredFields()) {
-                    field.setAccessible(true); // Allow access to private fields
-                    headerRow.createCell(colIndex++).setCellValue(field.getName()); // Extract field name
+
+                for (var method : firstRow.getClass().getDeclaredMethods()) {
+                    if (method.getName().startsWith("get")) {
+                        String headerName = method.getName().substring(3);
+                        headerRow.createCell(colIndex++).setCellValue(headerName);
+                    }
                 }
             }
 
-            // Create data rows
             int rowIndex = 1;
             for (Object rowData : data) {
                 Row row = sheet.createRow(rowIndex++);
                 int colIndex = 0;
-                for (Field field : rowData.getClass().getDeclaredFields()) {
-                    field.setAccessible(true); // Allow access to private fields
-                    Object value = field.get(rowData);
-                    row.createCell(colIndex++).setCellValue(value != null ? value.toString() : "");
+
+                for (var method : rowData.getClass().getDeclaredMethods()) {
+                    if (method.getName().startsWith("get")) {
+                        Object value = method.invoke(rowData);
+                        row.createCell(colIndex++).setCellValue(value != null ? value.toString() : "");
+                    }
                 }
             }
 
-            workbook.write(out); // Write workbook to ByteArrayOutputStream
-            return out.toByteArray(); // Return the byte array
-        } catch (IOException | IllegalAccessException e) {
+            workbook.write(out);
+            return out.toByteArray();
+        } catch (IOException | ReflectiveOperationException e) {
             throw new RuntimeException("Error exporting data to Excel", e);
         }
     }
