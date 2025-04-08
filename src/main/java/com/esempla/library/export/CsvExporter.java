@@ -13,11 +13,6 @@ public class CsvExporter implements Exporter {
             return new byte[0];
         }
 
-        Object firstRow = data.get(0);
-        if (!firstRow.getClass().getPackageName().startsWith("com.esempla.library.service.dto")) {
-            throw new IllegalArgumentException("Unsupported data type for CSV export");
-        }
-
         try (StringWriter stringWriter = new StringWriter()) {
             StatefulBeanToCsv<Object> beanToCsv = new StatefulBeanToCsvBuilder<Object>(stringWriter).withApplyQuotesToAll(false).build();
 
