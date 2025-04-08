@@ -1,15 +1,25 @@
 package com.esempla.library.service.dto;
 
+import com.opencsv.bean.CsvBindByName;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
 public class BorrowedBookDTO {
 
+    @CsvBindByName(column = "id")
     private Long id;
+
+    @CsvBindByName(column = "borrow_date_time")
     private ZonedDateTime borrowDateTime;
+
+    @CsvBindByName(column = "book_name")
     private String bookName;
+
+    @CsvBindByName(column = "client_first_name")
     private String clientFirstName;
+
+    @CsvBindByName(column = "client_last_name")
     private String clientLastName;
 
     public BorrowedBookDTO(Long id, Timestamp borrowDateTime, String bookName, String clientFirstName, String clientLastName) {

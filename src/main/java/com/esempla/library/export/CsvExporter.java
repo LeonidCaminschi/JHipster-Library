@@ -1,6 +1,8 @@
 package com.esempla.library.export;
 
-import java.lang.reflect.Field;
+import com.opencsv.bean.StatefulBeanToCsv;
+import com.opencsv.bean.StatefulBeanToCsvBuilder;
+import java.io.StringWriter;
 import java.util.List;
 
 public class CsvExporter implements Exporter {
@@ -11,35 +13,19 @@ public class CsvExporter implements Exporter {
             return new byte[0];
         }
 
-        StringBuilder csvData = new StringBuilder();
-
-        Field[] fields = data.get(0).getClass().getDeclaredFields();
-        for (int i = 0; i < fields.length; i++) {
-            csvData.append(fields[i].getName());
-            if (i < fields.length - 1) {
-                csvData.append(",");
-            }
-        }
-        csvData.append("\n");
-
-        for (Object obj : data) {
-            for (int i = 0; i < fields.length; i++) {
-                Field field = fields[i];
-                field.setAccessible(true);
-                try {
-                    Object value = field.get(obj);
-                    csvData.append(value != null ? value.toString() : "");
-                } catch (IllegalAccessException e) {
-                    csvData.append("");
-                }
-
-                if (i < fields.length - 1) {
-                    csvData.append(",");
-                }
-            }
-            csvData.append("\n");
+        Object firstRow = data.get(0);
+        if (!firstRow.getClass().getPackageName().startsWith("com.esempla.library.service.dto")) {
+            throw new IllegalArgumentException("Unsupported data type for CSV export");
         }
 
-        return csvData.toString().getBytes();
+        try (StringWriter stringWriter = new StringWriter()) {
+            StatefulBeanToCsv<Object> beanToCsv = new StatefulBeanToCsvBuilder<Object>(stringWriter).withApplyQuotesToAll(false).build();
+
+            beanToCsv.write(data);
+
+            return stringWriter.toString().getBytes();
+        } catch (Exception e) {
+            throw new RuntimeException("Error exporting data to CSV", e);
+        }
     }
 }

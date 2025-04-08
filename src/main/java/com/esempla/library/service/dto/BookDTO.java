@@ -1,13 +1,29 @@
 package com.esempla.library.service.dto;
 
+import com.esempla.library.domain.Book;
+import com.opencsv.bean.CsvBindByName;
+
 public class BookDTO {
 
+    @CsvBindByName(column = "id")
     private Long id;
+
+    @CsvBindByName(column = "book_name")
     private String name;
+
+    @CsvBindByName(column = "publishYear")
     private String publishYear;
+
+    @CsvBindByName(column = "copies")
     private Long copies;
+
+    @CsvBindByName(column = "author_first_name")
     private String authorFirstName;
+
+    @CsvBindByName(column = "author_last_name")
     private String authorLastName;
+
+    @CsvBindByName(column = "publisher_name")
     private String publisherName;
 
     public String getAuthorFirstName() {
