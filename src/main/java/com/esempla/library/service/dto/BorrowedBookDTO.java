@@ -1,25 +1,27 @@
 package com.esempla.library.service.dto;
 
+import com.esempla.library.export.CsvBindByNameOrder;
 import com.opencsv.bean.CsvBindByName;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.ZonedDateTime;
 
+@CsvBindByNameOrder({ "Id", "Borrow date time", "Book name", "Client's first name", "Client's last name" })
 public class BorrowedBookDTO {
 
-    @CsvBindByName(column = "id")
+    @CsvBindByName(column = "Id")
     private Long id;
 
-    @CsvBindByName(column = "borrow_date_time")
+    @CsvBindByName(column = "Borrow date time")
     private ZonedDateTime borrowDateTime;
 
-    @CsvBindByName(column = "book_name")
+    @CsvBindByName(column = "Book name")
     private String bookName;
 
-    @CsvBindByName(column = "client_first_name")
+    @CsvBindByName(column = "Client's first name")
     private String clientFirstName;
 
-    @CsvBindByName(column = "client_last_name")
+    @CsvBindByName(column = "Client's last name")
     private String clientLastName;
 
     public BorrowedBookDTO(Long id, Timestamp borrowDateTime, String bookName, String clientFirstName, String clientLastName) {

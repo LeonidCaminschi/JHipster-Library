@@ -1,28 +1,30 @@
 package com.esempla.library.service.dto;
 
+import com.esempla.library.export.CsvBindByNameOrder;
 import com.opencsv.bean.CsvBindByName;
 
+@CsvBindByNameOrder({ "Id", "Book Name", "Publish Year", "Copies", "Author's First Name", "Author's Last Name", "Publisher Name" })
 public class BookDTO {
 
-    @CsvBindByName(column = "id")
+    @CsvBindByName(column = "Id")
     private Long id;
 
-    @CsvBindByName(column = "book_name")
+    @CsvBindByName(column = "Book Name")
     private String name;
 
-    @CsvBindByName(column = "publishYear")
+    @CsvBindByName(column = "Publish Year")
     private String publishYear;
 
-    @CsvBindByName(column = "copies")
+    @CsvBindByName(column = "Copies")
     private Long copies;
 
-    @CsvBindByName(column = "author_first_name")
+    @CsvBindByName(column = "Author's First Name")
     private String authorFirstName;
 
-    @CsvBindByName(column = "author_last_name")
+    @CsvBindByName(column = "Author's Last Name")
     private String authorLastName;
 
-    @CsvBindByName(column = "publisher_name")
+    @CsvBindByName(column = "Publisher Name")
     private String publisherName;
 
     public String getAuthorFirstName() {
