@@ -1,5 +1,5 @@
 package com.esempla.library.export;
 
 public interface ExporterFactory {
-    Exporter createExporter(String fileType);
+    <T> Exporter<T> createExporter(String fileType);
 }

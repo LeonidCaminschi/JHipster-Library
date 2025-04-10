@@ -3,7 +3,8 @@ package com.esempla.library.service;
 import com.esempla.library.export.Exporter;
 import com.esempla.library.export.ExporterFactory;
 import com.esempla.library.repository.BookRepository;
-import com.esempla.library.repository.ClientRepository;
+import com.esempla.library.service.dto.BookDTO;
+import com.esempla.library.service.dto.BorrowedBookDTO;
 import java.util.List;
 import org.springframework.stereotype.Service;
 
@@ -21,14 +22,16 @@ public class ExportService {
     }
 
     public byte[] exportData(String tableName, String fileType) {
-        List<?> data =
-            switch (tableName.toLowerCase()) {
-                case "books" -> bookRepository.findAllAsDTO();
-                case "borrowedbooks" -> borrowedBookService.findAllAsDTO();
-                default -> throw new IllegalArgumentException("Unsupported table: " + tableName);
-            };
-
-        Exporter exporter = exporterFactory.createExporter(fileType);
-        return exporter.export(data);
+        if ("books".equalsIgnoreCase(tableName)) {
+            List<BookDTO> books = bookRepository.findAllAsDTO();
+            Exporter<BookDTO> exporter = exporterFactory.createExporter(fileType);
+            return exporter.export(books);
+        } else if ("borrowedbooks".equalsIgnoreCase(tableName)) {
+            List<BorrowedBookDTO> borrowedBooks = borrowedBookService.findAllAsDTO();
+            Exporter<BorrowedBookDTO> exporter = exporterFactory.createExporter(fileType);
+            return exporter.export(borrowedBooks);
+        } else {
+            throw new IllegalArgumentException("Unsupported table: " + tableName);
+        }
     }
 }

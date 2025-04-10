@@ -1,6 +1,5 @@
 package com.esempla.library.service.dto;
 
-import com.esempla.library.domain.Book;
 import com.opencsv.bean.CsvBindByName;
 
 public class BookDTO {

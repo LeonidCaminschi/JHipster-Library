@@ -6,10 +6,10 @@ import org.springframework.stereotype.Service;
 public class ExporterFactoryImpl implements ExporterFactory {
 
     @Override
-    public Exporter createExporter(String fileType) {
+    public <T> Exporter<T> createExporter(String fileType) {
         return switch (fileType.toLowerCase()) {
-            case "csv" -> new CsvExporter();
-            case "excel" -> new ExcelExporter();
+            case "csv" -> new CsvExporter<>();
+            case "excel" -> new ExcelExporter<>();
             default -> throw new IllegalArgumentException("Unsupported file type: " + fileType);
         };
     }
