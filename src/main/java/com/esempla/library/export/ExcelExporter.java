@@ -2,7 +2,7 @@ package com.esempla.library.export;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.lang.reflect.Method;
+import java.lang.reflect.Field;
 import java.util.List;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
@@ -20,13 +20,12 @@ public class ExcelExporter<T> implements Exporter<T> {
 
             Row headerRow = sheet.createRow(0);
             T firstRow = data.get(0);
-            int colIndex = 0;
+            Field[] fields = firstRow.getClass().getDeclaredFields();
 
-            for (Method method : firstRow.getClass().getDeclaredMethods()) {
-                if (method.getName().startsWith("get")) {
-                    String headerName = method.getName().substring(3); // Remove "get" prefix
-                    headerRow.createCell(colIndex++).setCellValue(headerName);
-                }
+            int colIndex = 0;
+            for (Field field : fields) {
+                field.setAccessible(true);
+                headerRow.createCell(colIndex++).setCellValue(field.getName());
             }
 
             int rowIndex = 1;
@@ -34,17 +33,16 @@ public class ExcelExporter<T> implements Exporter<T> {
                 Row row = sheet.createRow(rowIndex++);
                 colIndex = 0;
 
-                for (Method method : rowData.getClass().getDeclaredMethods()) {
-                    if (method.getName().startsWith("get")) {
-                        Object value = method.invoke(rowData);
-                        row.createCell(colIndex++).setCellValue(value != null ? value.toString() : "");
-                    }
+                for (Field field : fields) {
+                    field.setAccessible(true);
+                    Object value = field.get(rowData);
+                    row.createCell(colIndex++).setCellValue(value != null ? value.toString() : "");
                 }
             }
 
             workbook.write(out);
             return out.toByteArray();
-        } catch (IOException | ReflectiveOperationException e) {
+        } catch (Exception e) {
             throw new RuntimeException("Error exporting data to Excel", e);
         }
     }

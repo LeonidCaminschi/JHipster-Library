@@ -1,5 +1,6 @@
 package com.esempla.library.export;
 
+import com.opencsv.CSVWriter;
 import com.opencsv.bean.StatefulBeanToCsv;
 import com.opencsv.bean.StatefulBeanToCsvBuilder;
 import com.opencsv.exceptions.CsvDataTypeMismatchException;
@@ -16,7 +17,12 @@ public class CsvExporter<T> implements Exporter<T> {
         }
 
         try (StringWriter stringWriter = new StringWriter()) {
-            StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(stringWriter).withApplyQuotesToAll(false).build();
+            StatefulBeanToCsv<T> beanToCsv = new StatefulBeanToCsvBuilder<T>(stringWriter)
+                .withApplyQuotesToAll(false)
+                .withEscapechar(CSVWriter.NO_ESCAPE_CHARACTER)
+                .withSeparator(';')
+                .withOrderedResults(false)
+                .build();
 
             beanToCsv.write(data);
 
